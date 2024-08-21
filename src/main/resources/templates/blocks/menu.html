@@ -1,0 +1,15 @@
+<div th:fragment="menu">
+    <nav class="nav nav-underline justify-content-between">
+        <a class="nav-item nav-link link-body-emphasis" onclick="preventRedirectIfSamePage(event, '/blog')" th:href="@{/blog}">Posts</a>
+        <a class="nav-item nav-link link-body-emphasis"
+           th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"  onclick="preventRedirectIfSamePage(event, '/blog/add')"  th:href="@{/blog/add}">Add post</a>
+        <a class="nav-item nav-link link-body-emphasis" href="https://github.com/playtlancher">About us</a>
+    </nav>
+    <script>
+        function preventRedirectIfSamePage(event, url) {
+            if (window.location.pathname === url) {
+                event.preventDefault();
+            }
+        }
+    </script>
+</div>

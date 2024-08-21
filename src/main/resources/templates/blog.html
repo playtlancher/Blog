@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Blog</title>
+</head>
+<body>
+<div class="container">
+    <header class="border-bottom lh-1 py-3" th:insert="blocks/header :: header"></header>
+    <div class="nav-scroller py-1 mb-3 border-bottom" th:insert="blocks/menu :: menu"></div>
+</div>
+<main class="container" th:each="post: ${posts}">
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h3 class="mb-0" th:text="${post.getTitle()}"/>
+                    <div class="mb-1 text-body-secondary">Nov 12</div>
+                    <p class="card-text mb-auto" th:text="${post.getSmallDescription()}"/>
+                    <a th:href="'/blog/' + ${post.getId()}" class="icon-link gap-1 icon-link-hover stretched-link"><font
+                            _mstmutation="1">
+                        Continue reading
+                    </font>
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                         role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                         focusable="false" _mstaria-label="470535" _mstHash="31"><title _mstHash="32">
+                        Placeholder</title>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer class="py-5 text-center text-body-secondary bg-body-tertiary" th:insert="blocks/footer :: footer"></footer>
+<script>
+    function preventRedirectIfOnPage(targetUrl) {
+        const currentUrl = window.location.pathname;
+        if (currentUrl !== targetUrl) {
+            window.location.href = targetUrl;
+        }
+    }
+</script>
+<script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

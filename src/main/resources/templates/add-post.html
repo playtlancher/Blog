@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create a New Post</title>
+  <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <header class="border-bottom lh-1 py-3" th:insert="blocks/header :: header"></header>
+  <div class="nav-scroller py-1 mb-3 border-bottom" th:insert="blocks/menu :: menu"></div>
+
+</div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center">Create a New Post</h1>
+      <form method="post" action="/blog/add">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Enter post title" required>
+        </div>
+        <div class="mb-3">
+          <label for="smallDescription" class="form-label">Small Description</label>
+          <textarea class="form-control" id="smallDescription" name="smallDescription" rows="2" placeholder="Enter a brief description" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="text" class="form-label">Post Content</label>
+          <textarea class="form-control" id="text" name="text" rows="6" placeholder="Enter the full content of your post" required></textarea>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg">Add Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<footer class="py-5 text-center text-body-secondary bg-body-tertiary" th:insert="blocks/footer :: footer"></footer>
+
+<script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package org.blog.blog.config;
 
-import org.blog.blog.AuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,16 +27,15 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/css/**", "/vendor/**", "/images/**" , "/fonts/**" , "/js/**" ).permitAll();
                     registry.requestMatchers("/login" , "/blog/**" , "/registration").permitAll();
-                    registry.requestMatchers("/admin/**" , "/blog/add").hasAuthority("ADMIN");
+                    registry.requestMatchers( "/blog/add").hasAuthority("ADMIN");
                     registry.requestMatchers("/account").hasAnyAuthority("USER", "ADMIN");
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer
                             .loginPage("/login")
-                            .defaultSuccessUrl("/home")
+                            .defaultSuccessUrl("/blog")
                             .failureUrl("/login?error=true")
-                            .successHandler(new AuthenticationSuccessHandler())
                             .permitAll();
                 })
                 .build();

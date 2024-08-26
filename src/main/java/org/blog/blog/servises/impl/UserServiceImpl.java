@@ -32,11 +32,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void registration(String username, String email, String password, Model model) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setEmail(email);
+    public void registration(User user, Model model) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User saved = userRepository.save(user);
         model.addAttribute("user", saved);
     }
@@ -52,13 +49,15 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username).get();
         return user;
     }
+
     @Override
-    public void saveAvatar(MultipartFile avatar){
+    public void saveAvatar(MultipartFile avatar) {
         User user = getUser();
         user.setAvatar(transferFile(avatar));
         userRepository.save(user);
     }
-    public String transferFile(MultipartFile file){
+
+    public String transferFile(MultipartFile file) {
         String pathToFolder = System.getProperty("user.home") + File.separator + "images" + File.separator;
         String id = UUID.randomUUID().toString();
         try {
@@ -67,5 +66,15 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return id + ".jpg";
+    }
+
+    @Override
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
+    @Override
+    public boolean isEmailTaken(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }

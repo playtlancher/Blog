@@ -1,6 +1,7 @@
 package org.blog.blog.Controller;
 
 
+import org.blog.blog.entities.User;
 import org.blog.blog.repos.UserRepository;
 import org.blog.blog.servises.UserService;
 import org.blog.blog.servises.impl.UserServiceImpl;
@@ -28,11 +29,24 @@ public class AuthorizationController {
     }
 
     @PostMapping("/registration")
-    public String handleRegistration(Model model,
-                                     @RequestParam String username,
-                                     @RequestParam String password,
-                                     @RequestParam String email) {
-        userService.registration(username, email, password, model);
+    public String handleRegistration(Model model,@RequestParam String confirmPassword , User user) {
+        if (!user.getPassword().equals(confirmPassword)) {
+            model.addAttribute("error", "Passwords do not match.");
+            System.out.println("error 1");
+            return "registration";
+        }
+        if (userService.isUsernameTaken(user.getUsername())) {
+            model.addAttribute("error", "Username is already taken.");
+            System.out.println("error 2");
+            return "registration";
+        }
+
+        if (userService.isEmailTaken(user.getEmail())) {
+            model.addAttribute("error", "Email is already taken.");
+            System.out.println("error 3");
+            return "registration";
+        }
+        userService.registration(user, model);
         return "redirect:/login";
     }
 

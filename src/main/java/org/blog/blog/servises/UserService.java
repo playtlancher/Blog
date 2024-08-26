@@ -6,7 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
-    void registration(String username, String email, String password , Model model);
+    void registration(User user, Model model);
+
     User getUser();
+
     void saveAvatar(MultipartFile avatar);
+
+    boolean isUsernameTaken(String username);
+
+    boolean isEmailTaken(String email);
 }
+

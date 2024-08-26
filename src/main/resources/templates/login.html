@@ -1,100 +1,90 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--===============================================================================================-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/css/util.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <!--===============================================================================================-->
     <title>Sign in</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 450px;
+            margin-top: 100px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .form-control {
+            height: 45px;
+            font-size: 16px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            height: 45px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .link-primary {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .link-primary:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
-<div id="limiter" class="limiter fade-in">
-    <div class="container-login100">
-        <div class="wrap">
-            <form id="login-form" class="login100-form validate-form"
-                  th:action="@{/login}" method="post">
-                    <span class="login100-form-title p-b-26">
-                        Welcome
-                    </span>
 
-
-                <div class="wrap-input100 validate-input" data-validate="Enter username">
-                    <input id="username" class="input100" type="text" name="username">
-                    <span class="focus-input100" data-placeholder="Username"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye"></i>
-                    </span>
-                    <input id="password" class="input100" type="password" name="password">
-                    <span class="focus-input100" data-placeholder="Password"></span>
-                </div>
-                <div>
-                    <input type="checkbox">
-                    <span class="poppins-regular">Remember me</span>
-                </div>
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button id="login-button" class="login100-form-btn">
-                            Login
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <div id="switch-sign-up-button-conteiner" class="text-center p-t-115">
-                    <span class="txt1">
-                        Don’t have an account?
-                    </span>
-
-                <button id="switch-registration" class="txt2 guidance">
-                    <a href="/registration">Sign Up</a>
-                </button>
+<div class="container d-flex justify-content-center">
+    <div class="login-container">
+        <h2 class="mb-4">Sign in</h2>
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                Invalid username or password
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <div class="text-center mt-4">
+            <p>Don’t have an account? <a href="/registration" class="link-primary">Sign Up</a></p>
         </div>
     </div>
 </div>
-<footer>
-    <p>&copy; 2024 My To-Do List App by <a href="https://github.com/playtlancher">playtlancher</a></p>
+
+<footer class="footer text-center">
+    <p>&copy; 2024 Blog App by <a href="https://github.com/playtlancher" class="link-primary">playtlancher</a></p>
 </footer>
-<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script src="/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-<script src="/vendor/bootstrap/js/popper.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-<script src="/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-<script src="/vendor/daterangepicker/moment.min.js"></script>
-<script src="/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-<script src="/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-<script src="/js/login.js"></script>
-<script type="module" src="/js/main.js"></script>
 
-
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

@@ -28,6 +28,11 @@ public class MainController {
     public String handleLogout(Model model) {
         return "login";
     }
+    @GetMapping("/")
+
+    public String home(Model model) {
+        return "login";
+    }
 
     @GetMapping("/account")
     public String account(Model model) {

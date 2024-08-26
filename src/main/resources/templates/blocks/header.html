@@ -3,11 +3,13 @@
         <div class="col-4 pt-1">
         </div>
         <div class="col-4 text-center">
-            <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">Razanka's blog</a>
+            <a class="blog-header-logo text-body-emphasis text-decoration-none" href="">Razanka's blog</a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
             <a class="btn btn-sm btn-outline-secondary"
-               th:if="${not #authorization.expression('isAuthenticated()')}" href="/registration">Sign up</a>
+               th:if="${not #authorization.expression('isAuthenticated()')}" href="/login">Sign in</a>
+            <a class="btn btn-sm btn-outline-secondary"
+               th:if="${#authorization.expression('isAuthenticated()')}" href="/logout">Log Out</a>
         </div>
     </div>
 </div>

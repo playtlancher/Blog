@@ -27,9 +27,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/css/**", "/vendor/**", "/images/**" , "/fonts/**" , "/js/**" ).permitAll();
-                    registry.requestMatchers("/login" , "/blog/**" , "/registration/**").permitAll();
+                    registry.requestMatchers("/login" , "/blog/**" , "/registration").permitAll();
                     registry.requestMatchers("/admin/**" , "/blog/add").hasAuthority("ADMIN");
-                    registry.requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN");
+                    registry.requestMatchers("/account").hasAnyAuthority("USER", "ADMIN");
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {

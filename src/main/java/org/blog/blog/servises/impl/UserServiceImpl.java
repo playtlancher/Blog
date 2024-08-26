@@ -2,46 +2,70 @@ package org.blog.blog.servises.impl;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.blog.blog.entities.User;
 import org.blog.blog.servises.UserService;
 import org.blog.blog.repos.UserRepository;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
-    public boolean login(User user, HttpSession session) {
-//        User userDB = userRepository.findByUsername(user.getUsername());
-//        if (passwordEncoder.matches(user.getPassword(), userDB.getPassword())) {
-//
-//            session.setAttribute("username", userDB.getUsername());
-//            session.setAttribute("id", userDB.getId());
-//            return true;
-//        }
-        return false;
+    public void registration(String username, String email, String password, Model model) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEmail(email);
+        User saved = userRepository.save(user);
+        model.addAttribute("user", saved);
     }
 
     @Override
-    public boolean register(User user) {
-        if (userRepository.findByUsername(user.getUsername()) == null) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return true;
+    public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
         }
-
-        return false;
+        User user = userRepository.findByUsername(username).get();
+        return user;
+    }
+    @Override
+    public void saveAvatar(MultipartFile avatar){
+        User user = getUser();
+        user.setAvatar(transferFile(avatar));
+        userRepository.save(user);
+    }
+    public String transferFile(MultipartFile file){
+        String pathToFolder = System.getProperty("user.home") + File.separator + "images" + File.separator;
+        String id = UUID.randomUUID().toString();
+        try {
+            file.transferTo(new File(pathToFolder + id + ".jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return id + ".jpg";
     }
 }

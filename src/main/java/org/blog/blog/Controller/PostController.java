@@ -1,11 +1,10 @@
 package org.blog.blog.Controller;
 
-import org.blog.blog.entities.Post;
 import org.blog.blog.repos.CommentRepository;
 import org.blog.blog.repos.PostRepository;
 import org.blog.blog.repos.UserRepository;
-import org.blog.blog.services.PostService;
-import org.blog.blog.services.impl.PostServiceImpl;
+import org.blog.blog.servises.PostService;
+import org.blog.blog.servises.impl.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +50,7 @@ public class PostController {
     }
     @PostMapping("/blog/{id}/leave-comment")
     public String leaveComment(@RequestParam String comment , @PathVariable("id") int id, Model model) {
-
-        return "/blog/" + id;
+        postService.addComment(id, comment);
+        return "redirect:/blog/" + id;
     }
 }

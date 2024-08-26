@@ -39,14 +39,6 @@
 
 </main>
 <footer class="py-5 text-center text-body-secondary bg-body-tertiary" th:insert="blocks/footer :: footer"></footer>
-<script>
-    function preventRedirectIfOnPage(targetUrl) {
-        const currentUrl = window.location.pathname;
-        if (currentUrl !== targetUrl) {
-            window.location.href = targetUrl;
-        }
-    }
-</script>
 <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

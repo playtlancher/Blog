@@ -1,4 +1,4 @@
-package org.blog.blog.services;
+package org.blog.blog.servises;
 
 
 import org.blog.blog.entities.Comment;

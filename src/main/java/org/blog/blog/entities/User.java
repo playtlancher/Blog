@@ -23,6 +23,7 @@ public class User implements UserDetails{
     private String password;
     private String email;
     private Role role = Role.USER;
+    private String avatar = "default-user-avatar.jpg";
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
